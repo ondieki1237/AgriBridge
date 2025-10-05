@@ -1,0 +1,66 @@
+{
+  "info": {
+    "name": "AgriBridge API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Farmer One\",\n  \"email\": \"farmer1@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"farmer\"\n}" },
+        "url": { "raw": "http://localhost:5000/api/auth/register", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","auth","register"] }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"farmer1@example.com\",\n  \"password\": \"password123\"\n}" },
+        "url": { "raw": "http://localhost:5000/api/auth/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","auth","login"] }
+      }
+    },
+    {
+      "name": "Auth - Profile",
+      "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "http://localhost:5000/api/auth/profile", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","auth","profile"] } }
+    },
+    {
+      "name": "Produce - Create",
+      "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" } ], "body": { "mode": "raw", "raw": "{\n  \"farmerId\": \"{{farmerId}}\",\n  \"crop\": \"mango\",\n  \"quantityKg\": 50,\n  \"location\": \"Nairobi\"\n}" }, "url": { "raw": "http://localhost:5000/api/produce", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","produce"] } }
+    },
+    {
+      "name": "Produce - List",
+      "request": { "method": "GET", "url": { "raw": "http://localhost:5000/api/produce", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","produce"] } }
+    },
+    {
+      "name": "Notifications - Notify Subscribers",
+      "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"subject\": \"New produce available\",\n  \"html\": \"<p>New mangoes available</p>\"\n}" }, "url": { "raw": "http://localhost:5000/api/notifications/notify", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","notifications","notify"] } }
+    },
+    {
+      "name": "Match - Find",
+      "request": { "method": "GET", "url": { "raw": "http://localhost:5000/api/match/find?crop=mango&location=Nairobi", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","match","find"], "query": [ { "key": "crop", "value": "mango" }, { "key": "location", "value": "Nairobi" } ] } }
+    },
+    {
+      "name": "Transactions - Create",
+      "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" } ], "body": { "mode": "raw", "raw": "{\n  \"buyerId\": \"{{buyerId}}\",\n  \"farmerId\": \"{{farmerId}}\",\n  \"produceId\": \"{{produceId}}\",\n  \"amount\": 20000\n}" }, "url": { "raw": "http://localhost:5000/api/transactions", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","transactions"] } }
+    },
+    {
+      "name": "Transactions - Status",
+      "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "http://localhost:5000/api/transactions/{{transactionId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","transactions","{{transactionId}}"] } }
+    }
+    ,
+    {
+      "name": "Python - Weather",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"latitude\": -2.1026,\n  \"longitude\": 38.1301,\n  \"hourly\": [\"temperature_2m\", \"relative_humidity_2m\"],\n  \"daily\": [\"uv_index_max\"],\n  \"past_days\": 3\n}" },
+        "url": { "raw": "http://localhost:5000/api/python/weather", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","python","weather"] }
+      }
+    }
+  ]
+}

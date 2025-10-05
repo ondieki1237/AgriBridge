@@ -47,3 +47,49 @@ Next steps (suggested)
 - Add transactional logging and dashboards.
 # AgriBridge
 AgriBridge reduces post-harvest losses and increases farmer incomes by ensuring timely, aggregated deliveries to reliable buyers, guided by climate-aware alerts
+
+## Local development
+
+You can run components manually or with Docker Compose. The docker-compose setup brings up MongoDB, the Python service, and the Node backend wired together for local development.
+
+### Using Docker Compose (recommended for local dev)
+
+1. Start services:
+
+```bash
+docker compose up --build
+```
+
+2. Services exposed:
+- Node API: http://localhost:5000
+- Python service: http://localhost:8000
+- MongoDB: mongodb://localhost:27017
+
+The compose file sets `PYTHON_SERVICE_URL` for the Node container to `http://python:8000` so the Node backend will forward weather requests to the Python service.
+
+### Manual (without Docker)
+
+1. Start MongoDB (e.g., locally or use Atlas). If running locally, default connection is mongodb://localhost:27017.
+2. Start Python service:
+
+```bash
+cd python_service
+source ../.venv/bin/activate
+pip install -r requirements.txt
+uvicorn app:app --reload --host 0.0.0.0 --port 8000
+```
+
+3. Start Node backend from repository root so it loads `.env`:
+
+```bash
+node src/index.js
+```
+
+4. Test the weather proxy:
+
+```bash
+curl -X POST http://localhost:5000/api/python/weather \
+	-H "Content-Type: application/json" \
+	-d '{"latitude": -2.1026, "longitude": 38.1301, "hourly":["temperature_2m","relative_humidity_2m"], "daily":["uv_index_max"], "past_days":3}'
+```
+

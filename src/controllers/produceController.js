@@ -1,6 +1,7 @@
 const Produce = require('../models/Produce');
 const mailer = require('../services/mailer');
 const axios = require('axios');
+const recommender = require('../services/recommender');
 
 exports.createProduce = async (req, res) => {
   try {
@@ -18,17 +19,25 @@ exports.createProduce = async (req, res) => {
       await mailer.sendMail({ to: subs, subject, html });
     }
 
-    // Call Python microservice for spoilage risk (if configured)
-    if (process.env.PYTHON_SERVICE_URL) {
-      try {
-        await axios.post(`${process.env.PYTHON_SERVICE_URL.replace(/\/$/, '')}/predict`, {
-          crop,
-          quantityKg,
-          location
-        }, { timeout: 5000 });
-      } catch (err) {
-        console.warn('Python service call failed', err.message);
+    // Call recommender (prediction + weather + action rules) and persist into metadata
+    try {
+      const recPayload = {
+        crop,
+        quantityKg,
+        location,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude
+      };
+      const rec = await recommender.recommend(recPayload);
+      if (rec) {
+        saved.metadata = saved.metadata || {};
+        saved.metadata.recommendations = rec.recommendations || [];
+        saved.metadata.spoilage = rec.prediction || { spoilage_risk: rec.spoilage_score };
+        saved.metadata.weather = rec.weather || null;
+        await saved.save();
       }
+    } catch (e) {
+      console.warn('Recommender failed (non-fatal):', e.message || e);
     }
 
     res.status(201).json(saved);

@@ -1,0 +1,93 @@
+{
+  "info": {
+    "name": "AgriBridge Spoilage Predictor API",
+    "_postman_id": "b3f9a210-56d1-4d7e-8f44-agribridge123",
+    "description": "Postman collection for testing AgriBridge Spoilage Predictor API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/health",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Predict",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"crop\": \"Maize\",\n  \"quantityKg\": 250,\n  \"location\": \"Nairobi\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/predict",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["predict"]
+        }
+      }
+    },
+    {
+      "name": "Batch Predict",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "[\n  {\n    \"crop\": \"Wheat\",\n    \"quantityKg\": 100,\n    \"location\": \"Kisumu\"\n  },\n  {\n    \"crop\": \"Beans\",\n    \"quantityKg\": 500,\n    \"location\": \"Mombasa\"\n  }\n]"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/batch_predict",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["batch_predict"]
+        }
+      }
+    },
+    {
+      "name": "Weather",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"latitude\": -1.2921,\n  \"longitude\": 36.8219,\n  \"hourly\": [\"temperature_2m\", \"wind_speed_10m\", \"relative_humidity_2m\"],\n  \"daily\": [\"uv_index_max\", \"temperature_2m_max\", \"precipitation_sum\"],\n  \"past_days\": 7,\n  \"timezone\": \"auto\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/weather",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["weather"]
+        }
+      }
+    }
+  ]
+}

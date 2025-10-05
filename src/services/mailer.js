@@ -20,9 +20,23 @@ async function sendMail({ to, subject, text, html }) {
     html
   };
 
-  const info = await transport.sendMail(mail);
-  console.log('Email sent', info.messageId);
-  return info;
+  try {
+    const info = await transport.sendMail(mail);
+    console.log('Email sent', info.messageId);
+    return info;
+  } catch (err) {
+    console.error('Failed to send email', err.message || err);
+    throw err;
+  }
 }
 
-module.exports = { sendMail };
+async function verifyTransport() {
+  return new Promise((resolve, reject) => {
+    transport.verify((err, success) => {
+      if (err) return reject(err);
+      resolve(success);
+    });
+  });
+}
+
+module.exports = { sendMail, verifyTransport };
