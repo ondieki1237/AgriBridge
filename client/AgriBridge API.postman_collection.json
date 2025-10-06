@@ -1,0 +1,876 @@
+{
+	"info": {
+		"_postman_id": "d3f82422-4fd7-4131-abb8-b4baefce8308",
+		"name": "AgriBridge API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40384958"
+	},
+	"item": [
+		{
+			"name": "Node API",
+			"item": [
+				{
+					"name": "Auth - Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Farmer One\",\n  \"email\": \"farmer1@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"farmer\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth - Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"farmer1@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth - Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/auth/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produce - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"farmerId\": \"{{farmerId}}\",\n  \"crop\": \"mango\",\n  \"quantityKg\": 50,\n  \"location\": \"Nairobi\",\n  \"latitude\": -2.1026,\n  \"longitude\": 38.1301\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/produce",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"produce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produce - List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/produce",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"produce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Market - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Kisumu Market\",\n  \"contactEmail\": \"buyer@example.com\",\n  \"crops\": [\"mango\", \"maize\"],\n  \"prices\": [{\"crop\":\"mango\",\"pricePerKg\":50}],\n  \"location\": \"Kisumu\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/market",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"market"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Market - Find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/market/find?crop=mango&location=Nairobi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"market",
+								"find"
+							],
+							"query": [
+								{
+									"key": "crop",
+									"value": "mango"
+								},
+								{
+									"key": "location",
+									"value": "Nairobi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth - Register (Buyer)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Buyer One\",\n  \"email\": \"buyer1@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"buyer\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth - Login (Buyer)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"buyer1@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Offers - Create (Buyer)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{buyerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"buyerId\":\"{{buyerId}}\",\"crop\":\"mango\",\"quantityKgWanted\":200,\"pricePerKg\":55,\"location\":\"Kisumu\",\"desiredDate\":\"2025-10-10T08:00:00Z\",\"notes\":\"Need ripe mangoes\"}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/offers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"offers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Offers - List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/offers?crop=mango&location=Kisumu",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"offers"
+							],
+							"query": [
+								{
+									"key": "crop",
+									"value": "mango"
+								},
+								{
+									"key": "location",
+									"value": "Kisumu"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Offers - Match Produce",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/offers/{{offerId}}/match",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"offers",
+								"{{offerId}}",
+								"match"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Offers - Accept (Farmer)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{farmerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"produceId\": \"{{produceId}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/offers/{{offerId}}/accept",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"offers",
+								"{{offerId}}",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notifications - Notify Subscribers",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subject\": \"New produce available\",\n  \"html\": \"<p>New mangoes available</p>\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/notifications/notify",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notifications",
+								"notify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Match - Find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/match/find?crop=mango&location=Nairobi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"match",
+								"find"
+							],
+							"query": [
+								{
+									"key": "crop",
+									"value": "mango"
+								},
+								{
+									"key": "location",
+									"value": "Nairobi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transactions - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"buyerId\": \"{{buyerId}}\",\n  \"farmerId\": \"{{farmerId}}\",\n  \"produceId\": \"{{produceId}}\",\n  \"amount\": 20000\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transactions - Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/transactions/{{transactionId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"transactions",
+								"{{transactionId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Python - Weather (via Node proxy)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": -2.1026,\n  \"longitude\": 38.1301,\n  \"hourly\": [\"temperature_2m\", \"relative_humidity_2m\"],\n  \"daily\": [\"uv_index_max\"],\n  \"past_days\": 3\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/python/weather",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"python",
+								"weather"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recommend - Get Recommendations",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"crop\": \"mango\",\n  \"quantityKg\": 100,\n  \"location\": \"Kibera\",\n  \"latitude\": -2.1026,\n  \"longitude\": 38.1301\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/recommend",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"recommend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batches - Aggregate (auto-create)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"maxBatchKg\": 800\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/batches/aggregate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"batches",
+								"aggregate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batches - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"crop\":\"mango\",\"location\":\"Kibera\",\"produceIds\":[\"{{produceId1}}\",\"{{produceId2}}\"]}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/batches",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batches - List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/batches",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batches - Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/batches/{{batchId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"batches",
+								"{{batchId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batches - Match to Market",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/batches/{{batchId}}/match",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"batches",
+								"{{batchId}}",
+								"match"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batches - Accept",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/batches/{{batchId}}/accept",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"batches",
+								"{{batchId}}",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batches - Schedule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"scheduledDate\": \"2025-10-06T08:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/batches/{{batchId}}/schedule",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"batches",
+								"{{batchId}}",
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Python Service (direct)",
+			"item": [
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/health",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Predict",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"crop\": \"Maize\",\n  \"quantityKg\": 250,\n  \"location\": \"Nairobi\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/predict",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"predict"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batch Predict",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"crop\": \"Wheat\",\n    \"quantityKg\": 100,\n    \"location\": \"Kisumu\"\n  }\n]"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/batch_predict",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"batch_predict"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Weather",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": -2.1026,\n  \"longitude\": 38.1301,\n  \"hourly\": [\"temperature_2m\", \"relative_humidity_2m\"],\n  \"daily\": [\"uv_index_max\"],\n  \"past_days\": 3\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/weather",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"weather"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
