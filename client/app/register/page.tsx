@@ -5,6 +5,7 @@ import type React from "react"
 import { useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useAuth } from "@/lib/auth-context"
+import { apiClient } from "@/lib/api-client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -44,14 +45,22 @@ function RegisterContent() {
     setIsLoading(true)
 
     try {
-      await register(name, email, password, role)
-      if (role === "farmer") {
-        router.push("/farmer/dashboard")
-      } else {
-        router.push("/buyer/dashboard")
-      }
+      // Call the API directly so we don't auto-login the user on register.
+      // The backend typically returns a token; we'll redirect the user to the
+      // login page and show a success message instead of auto-authenticating.
+      const resp = await apiClient.register({ name, email, password, role })
+
+      // If registration succeeded (token returned), redirect to login with a flag
+      router.push(`/login?role=${role}&registered=1`)
     } catch (err: any) {
-      setError(err.message || "Failed to create account. Please try again.")
+      const msg = err?.message || "Failed to create account. Please try again."
+
+      // Backend might return 409 Conflict or a message mentioning the user already exists
+      if (err?.status === 409 || /exist|already|duplicate/i.test(msg)) {
+        setError("An account with this email already exists. Please login.")
+      } else {
+        setError(msg)
+      }
     } finally {
       setIsLoading(false)
     }

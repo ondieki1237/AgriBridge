@@ -146,8 +146,17 @@ export default function FarmerDashboard() {
                 <Package className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                 <span className="hidden sm:inline">My Produce</span>
               </h2>
-              <Button
-                onClick={() => setShowAddForm(!showAddForm)}
+              <div className="flex items-center gap-2">
+                <Button
+                  onClick={() => router.push('/farmer/products')}
+                  variant="outline"
+                  size="sm"
+                >
+                  My Products
+                </Button>
+
+                <Button
+                  onClick={() => setShowAddForm(!showAddForm)}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 transition-all duration-200 hover:scale-105"
                 size="sm"
               >
@@ -155,6 +164,7 @@ export default function FarmerDashboard() {
                 <span className="hidden sm:inline">Add Produce</span>
                 <span className="sm:hidden">Add</span>
               </Button>
+              </div>
             </div>
 
             {showAddForm && (
@@ -269,7 +279,9 @@ export default function FarmerDashboard() {
                           <Leaf className="w-5 h-5 text-primary" />
                         </div>
                         <div>
-                          <h3 className="font-semibold text-foreground capitalize">{item.crop}</h3>
+                          <h3 className="font-semibold text-foreground capitalize">
+                            <a href={`/farmer/produce/${item._id}`} className="hover:underline">{item.crop}</a>
+                          </h3>
                           <p className="text-sm text-muted-foreground flex items-center gap-1">
                             <Weight className="w-3 h-3" />
                             {item.quantityKg} kg

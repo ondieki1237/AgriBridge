@@ -131,6 +131,29 @@ export class ApiClient {
     return this.request<any[]>("/produce")
   }
 
+  async getProduce(produceId: string) {
+    return this.request<any>(`/produce/${produceId}`)
+  }
+
+  async updateProduce(produceId: string, data: {
+    crop?: string
+    quantityKg?: number
+    location?: string
+    latitude?: number
+    longitude?: number
+  }) {
+    return this.request<any>(`/produce/${produceId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    })
+  }
+
+  async deleteProduce(produceId: string) {
+    return this.request<any>(`/produce/${produceId}`, {
+      method: "DELETE",
+    })
+  }
+
   // Market endpoints
   async createMarket(data: {
     name: string

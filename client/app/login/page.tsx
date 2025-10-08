@@ -20,6 +20,7 @@ function LoginContent() {
   const [isLoading, setIsLoading] = useState(false)
 
   const role = searchParams.get("role") as "farmer" | "buyer"
+  const registered = searchParams.get("registered") === "1"
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -57,6 +58,11 @@ function LoginContent() {
 
         <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {registered && (
+              <div className="bg-emerald/10 border border-emerald/20 rounded-lg p-4">
+                <p className="text-sm text-emerald-700">Account successfully created. Please login.</p>
+              </div>
+            )}
             {error && (
               <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />

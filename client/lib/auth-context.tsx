@@ -64,14 +64,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       const response = await apiClient.login({ email, password })
-      if (!response || !response.token || !response.user) {
+
+      if (!response || !response.token) {
         throw new Error("Invalid login response from server")
       }
 
+      // Set token first so subsequent requests (getProfile) include Authorization
       apiClient.setToken(response.token)
-      setUser(response.user)
-      localStorage.setItem("user", JSON.stringify(response.user))
-      localStorage.setItem("role", response.user.role)
+
+      // If backend already returned user object, use it. Otherwise fetch profile.
+      let userObj = (response as any).user
+      if (!userObj) {
+        try {
+          userObj = await apiClient.getProfile()
+        } catch (err) {
+          // If profile fetch fails, clear token and rethrow
+          apiClient.clearToken()
+          throw new Error((err as any)?.message || "Failed to fetch user profile")
+        }
+      }
+
+      setUser(userObj)
+      localStorage.setItem("user", JSON.stringify(userObj))
+      localStorage.setItem("role", userObj.role)
     } catch (err: any) {
       // Preserve backend error shape (ApiError.message)
       throw new Error(err?.message || "Login failed")
@@ -85,14 +100,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       const response = await apiClient.register({ name, email, password, role })
-      if (!response || !response.token || !response.user) {
+
+      if (!response || !response.token) {
         throw new Error("Invalid register response from server")
       }
 
       apiClient.setToken(response.token)
-      setUser(response.user)
-      localStorage.setItem("user", JSON.stringify(response.user))
-      localStorage.setItem("role", response.user.role)
+
+      let userObj = (response as any).user
+      if (!userObj) {
+        try {
+          userObj = await apiClient.getProfile()
+        } catch (err) {
+          apiClient.clearToken()
+          throw new Error((err as any)?.message || "Failed to fetch user profile")
+        }
+      }
+
+      setUser(userObj)
+      localStorage.setItem("user", JSON.stringify(userObj))
+      localStorage.setItem("role", userObj.role)
     } catch (err: any) {
       throw new Error(err?.message || "Registration failed")
     }
